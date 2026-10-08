@@ -8,7 +8,7 @@ wallpaper, Chrome, PowerToys (Y/Z swap), TranslucentTB. Restarts at the end.
 Open cmd and paste:
 
 ```
-curl -L -o s.bat https://raw.githubusercontent.com/YOURUSER/YOURREPO/main/s.bat & s.bat
+curl -L -o setup_pc.py https://raw.githubusercontent.com/adataffi-ai/setup/main/setup_pc.py
 ```
 
 ## Files
