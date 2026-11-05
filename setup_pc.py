@@ -408,8 +408,6 @@ def step(fn):
 # --------- Ollama setup, and pulling model --------------
 target_dir = r"C:\Users\YourUsername\.local_bin\ollama"
 
-log("pulling ollama model")
-
 # 2. Check if the directory does NOT exist
 def install_ollama():
     log("Installing Ollama")
@@ -426,10 +424,6 @@ def install_ollama():
     else:
         log("Could not pull model: " + (r.stderr or "").strip()[:200])
 
-log("Loading the model. Actions needed.")
-
-run("ollama launch claude --model qwen2.5-coder:7b")
-
 
 def main():
     for fn in (dark_theme, autohide_taskbar, english_keyboard,
@@ -438,6 +432,9 @@ def main():
                swap_y_z, restart_explorer, restore_animations, launch_translucenttb,install_ollama):
         step(fn)
 
+log("Loading the model. Actions needed.")
+
+run("ollama launch claude --model qwen2.5-coder:7b")
 
 log("Done! Restart to aply language")
 
