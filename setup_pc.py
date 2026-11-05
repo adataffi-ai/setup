@@ -411,13 +411,14 @@ target_dir = r"C:\Users\YourUsername\.local_bin\ollama"
 log("pulling ollama model")
 
 # 2. Check if the directory does NOT exist
- log("Pulling model")
-    model = "qwen2.5-coder:7b"
-    r = powershell(f"ollama pull {model}", capture=True)
-    if r.returncode == 0:
-        log(f"Model {model} is ready")
-    else:
-        log(f"Could not pull model: {r.stderr.strip()[:200]}")
+def install_ollama():
+    log("Pulling model")
+        model = "qwen2.5-coder:7b"
+        r = powershell(f"ollama pull {model}", capture=True)
+        if r.returncode == 0:
+            log(f"Model {model} is ready")
+        else:
+            log(f"Could not pull model: {r.stderr.strip()[:200]}")
 
 log("Loading the model. Actions needed.")
 
@@ -428,7 +429,7 @@ def main():
     for fn in (dark_theme, autohide_taskbar, english_keyboard,
                english_display_language, set_wallpaper,
                install_translucenttb, install_powertoys, install_chrome_and_run,
-               swap_y_z, restart_explorer, restore_animations, launch_translucenttb):
+               swap_y_z, restart_explorer, restore_animations, launch_translucenttb,install_ollama):
         step(fn)
 
 
