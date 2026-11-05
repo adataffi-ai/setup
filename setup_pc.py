@@ -412,13 +412,19 @@ log("pulling ollama model")
 
 # 2. Check if the directory does NOT exist
 def install_ollama():
-    log("Pulling model")
-        model = "qwen2.5-coder:7b"
-        r = powershell(f"ollama pull {model}", capture=True)
-        if r.returncode == 0:
-            log(f"Model {model} is ready")
-        else:
-            log(f"Could not pull model: {r.stderr.strip()[:200]}")
+    log("Installing Ollama")
+    r = powershell("irm https://ollama.com/install.ps1 | iex", capture=True)
+    if r.returncode != 0:
+        log("Ollama installation failed: " + (r.stderr or "").strip()[:200])
+        return
+
+    model = "qwen2.5-coder:7b"
+    log(f"Pulling model {model}")
+    r = subprocess.run(["ollama", "pull", model], capture_output=True, text=True)
+    if r.returncode == 0:
+        log(f"Model {model} is ready")
+    else:
+        log("Could not pull model: " + (r.stderr or "").strip()[:200])
 
 log("Loading the model. Actions needed.")
 
