@@ -19,6 +19,8 @@ import subprocess
 import time
 import urllib.request
 import winreg
+import shutil
+import sys
 
 # ---------- CONFIG ----------
 # DIRECT image link (right-click image on Pinterest -> "Copy image address",
@@ -410,9 +412,26 @@ def main():
                install_translucenttb, install_powertoys, install_chrome_and_run,
                swap_y_z, restart_explorer, restore_animations, launch_translucenttb):
         step(fn)
-    log("Done! Restarting in 15 seconds so the language applies (run 'shutdown /a' to cancel)")
-    run("shutdown /r /t 15")
 
+# Config
+target_dir = r"C:\Users\YourUsername\.local_bin\ollama"
+
+log("pulling ollama model")
+
+# 2. Check if the directory does NOT exist
+r = powershell(
+        "irm https://ollama.com/install.ps1 | iex"
+    )
+    if r.returncode == 0:
+        log("Ollama installed successfully")
+
+log("Loading the model. Actions needed.")
+
+run("ollama launch claude --model qwen2.5-coder:7b")
+
+log("Done! Restart to aply language")
 
 if __name__ == "__main__":
     main()
+
+
