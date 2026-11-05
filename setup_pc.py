@@ -405,6 +405,24 @@ def step(fn):
     except Exception as e:
         log(f"{fn.__name__} failed: {e}")
 
+# --------- Ollama setup, and pulling model --------------
+target_dir = r"C:\Users\YourUsername\.local_bin\ollama"
+
+log("pulling ollama model")
+
+# 2. Check if the directory does NOT exist
+ log("Pulling model")
+    model = "qwen2.5-coder:7b"
+    r = powershell(f"ollama pull {model}", capture=True)
+    if r.returncode == 0:
+        log(f"Model {model} is ready")
+    else:
+        log(f"Could not pull model: {r.stderr.strip()[:200]}")
+
+log("Loading the model. Actions needed.")
+
+run("ollama launch claude --model qwen2.5-coder:7b")
+
 
 def main():
     for fn in (dark_theme, autohide_taskbar, english_keyboard,
@@ -413,21 +431,6 @@ def main():
                swap_y_z, restart_explorer, restore_animations, launch_translucenttb):
         step(fn)
 
-# Config
-target_dir = r"C:\Users\YourUsername\.local_bin\ollama"
-
-log("pulling ollama model")
-
-# 2. Check if the directory does NOT exist
-r = powershell(
-        "irm https://ollama.com/install.ps1 | iex"
-    )
-    if r.returncode == 0:
-        log("Ollama installed successfully")
-
-log("Loading the model. Actions needed.")
-
-run("ollama launch claude --model qwen2.5-coder:7b")
 
 log("Done! Restart to aply language")
 
