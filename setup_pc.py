@@ -405,10 +405,8 @@ def step(fn):
     except Exception as e:
         log(f"{fn.__name__} failed: {e}")
 
-# --------- Ollama setup, and pulling model --------------
-target_dir = r"C:\Users\YourUsername\.local_bin\ollama"
 
-# 2. Check if the directory does NOT exist
+# ---------- Ollama setup and model download ----------
 def install_ollama():
     log("Installing Ollama")
     r = powershell("irm https://ollama.com/install.ps1 | iex", capture=True)
@@ -429,16 +427,11 @@ def main():
     for fn in (dark_theme, autohide_taskbar, english_keyboard,
                english_display_language, set_wallpaper,
                install_translucenttb, install_powertoys, install_chrome_and_run,
-               swap_y_z, restart_explorer, restore_animations, launch_translucenttb,install_ollama):
+               swap_y_z, restart_explorer, restore_animations,
+               launch_translucenttb, install_ollama):
         step(fn)
+    log("Done! Restart to apply language")
 
-log("Loading the model. Actions needed.")
-
-run("ollama launch claude --model qwen2.5-coder:7b")
-
-log("Done! Restart to aply language")
 
 if __name__ == "__main__":
     main()
-
-
